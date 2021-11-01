@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styleLight.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <title>Learn Words</title>
+</head>
+<body>
+    <audio id="sound" src="sound/click.mp3"></audio>
+
+    <menu>
+        <button onclick="Theme.changeTheme()" class="changeTheme changeThemeLight"><img src="img/moon.png" alt="change page's theme" class="themeIcon"></button>
+    </menu>
+
+    <div class="game">
+        <div class="gameItem englishWord"><p>#</p></div>
+
+        <button class="gameItem menuButton"><p>#</p></button>
+        <button class="gameItem menuButton"><p>#</p></button>
+        <button class="gameItem menuButton"><p>#</p></button>
+
+        <button class="gameItem menuButton skipWord"><p>skip word</p></button>
+    </div>
+
+    <button class="setPlaceholder" onclick="UserView.showSettings()"><p>&#x25bd settings &#x25bd</p></button>
+
+    <form class="settings" action="#">
+        <div class="settingInputs">
+            <input type="text" name="enteredEnglishWord" placeholder="Enter a word" value="">
+            <input type="text" name="enteredRussianWord" placeholder="Enter a translation" value="">
+        </div>
+            
+        <div class="settingButtons">
+            <input type="button" value="add this word">
+            <input type="button" value="delete this word">
+        </div>
+    </form>
+
+    <script src="script.js"></script>
+</body>
+</html>

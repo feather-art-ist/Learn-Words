@@ -1,0 +1,271 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Poppins:wght@200&display=swap');
+/* font-family: 'Comfortaa', cursive;
+   font-family: 'Poppins', sans-serif;
+*/
+
+* {
+   margin: 0;
+   padding: 0;
+}
+
+html {
+   font-size: 1.2em;  /* this parameter controls paddings, margins and font-size */
+}
+
+body {
+   min-height: calc(100vh + 8rem);
+
+
+   background-color: rgb(36, 42, 43);
+}
+
+button {
+   font-size: inherit;
+   border: none;
+}
+
+p {
+   margin: 0.5rem;
+   font-family: 'Comfortaa', cursive;
+}
+
+
+
+/* OPTIONS GAME FIELD =================================== */
+
+.game {
+   margin: 0 auto;
+   padding: 1rem 0 0;
+   min-width: fit-content;
+   max-width: 80%;
+   position: relative;
+   top: 50vh;
+   transform: translate(0, -50%);
+   display: flex;
+   flex-direction: column;
+
+   font-size: inherit;
+   border-radius: 1rem;
+   user-select: none;
+
+
+   background-color: rgb(36, 42, 43);
+   box-shadow: .05rem .05rem .3rem 0 rgb(22, 26, 26),
+               -.05rem -.05rem .3rem 0 rgb(63, 72, 73),
+               inset .05rem .05rem .3rem 0 rgb(22, 26, 26),
+               inset -.05rem -.05rem .3rem 0 rgb(63, 72, 73);
+}
+
+
+
+/* OPTIONS GAME FIELD's BUTTONS ========================= */
+
+.gameItem {
+   margin: 0 1rem 1rem;
+   display: block;
+}
+
+.menuButton {
+  border-radius: 1rem;
+
+
+   color:rgb(104, 90, 54);
+   background-color: rgb(36, 42, 43);
+   box-shadow: .05rem .05rem .3rem 0 rgb(22, 26, 26),
+               -.05rem -.05rem .3rem 0 rgb(63, 72, 73),
+               inset -.05rem -.05rem .05rem 0 rgba(22, 26, 26, 0.1),
+               inset .05rem .05rem .05rem 0 rgb(63, 72, 73, 0.1);
+}
+
+.menuButton:hover {
+   color:rgb(129, 112, 65);
+   cursor: pointer;
+}
+
+.menuButton:active {
+   box-shadow: -.05rem -.05rem .3rem 0 rgb(22, 26, 26),
+               .05rem .05rem .3rem 0 rgb(63, 72, 73),
+               inset .05rem .05rem .05rem 0 rgba(22, 26, 26, 0.1),
+               inset -.05rem -.05rem .05rem 0 rgb(63, 72, 73, 0.1);
+}
+
+/* OPTION FIELD WITH ENGLISH WORD ======================= */
+
+.englishWord {
+   text-align: center;
+   border-radius: 1rem;
+
+
+   color:rgb(129, 112, 65);
+   background-color: rgb(36, 42, 43);
+   box-shadow: inset .05rem .05rem .3rem 0 rgb(22, 26, 26),
+               inset -.05rem -.05rem .3rem 0 rgb(63, 72, 73);
+}
+
+
+
+/* OPTION FOR BUTTON CHANGE THEME ======================= */
+
+menu {
+   height: 1.5rem;
+   width: 1.5rem;
+   position: absolute;
+   top: 1rem;
+   right: 1rem;
+   z-index: 1;
+   border-radius: 50%;
+
+
+   box-shadow: .05rem .05rem .3rem 0 rgb(22, 26, 26),
+               -.05rem -.05rem .3rem 0 rgb(63, 72, 73);
+}
+
+.changeTheme {
+   padding: 0;
+   margin: 0;
+   height: 100%;
+   width: 100%;
+   position: relative;
+   z-index: 1;
+   border-radius: 50%;
+   cursor: pointer;
+
+
+   background-color: rgb(36, 42, 43);
+   box-shadow: inset .03rem .03rem .2rem 0 rgb(22, 26, 26),
+               inset -.03rem -.03rem .2rem 0 rgb(63, 72, 73);
+}
+
+.changeTheme:hover > .themeIcon {
+   opacity: 100%;
+}
+
+.themeIcon {
+   margin: 20%;
+   width: 60%;
+   z-index: 1;
+
+   border-radius: 50%;
+   opacity: 50%;
+}
+
+
+
+/* OPTION FOR SETTINGS SECTIONS ========================= */
+
+.setPlaceholder {
+   display: block;
+   position: absolute;
+   top: calc(100vh - 2rem);
+   left: 50%;
+   transform: translate(-50%, 0);
+   background-color: transparent;
+}
+
+.setPlaceholder:hover {
+   cursor: pointer;
+}
+
+.setPlaceholder > p {
+   color: rgb(104, 90, 54);
+}
+
+.setPlaceholder:hover > p {
+   color: rgb(129, 112, 65);
+}
+
+.settings{
+   padding: 1.5rem .5rem .5rem;
+   height: 8rem;
+   width: 100%;
+   box-sizing: border-box;
+   position: absolute;
+   top: 100vh;
+   display: flex;
+   flex-direction: column;
+
+   background-color: rgb(104, 95, 75);
+}
+
+.settingInputs, .settingButtons {
+   display: flex;
+   justify-content: space-around;
+}
+
+.settingInputs > input {
+   margin: .5rem;
+   padding: 0.5rem;
+   width: 100%;
+   
+   background-color: rgb(104, 95, 75);
+   box-shadow: none;
+   box-shadow: inset .05rem .05rem .3rem 0 rgb(78, 71, 56),
+               inset -.05rem -.05rem .3rem 0 rgb(126, 115, 93);
+   border: none;
+   border-radius: 1rem;
+   font-family: 'Comfortaa', cursive;
+   font-size: inherit;
+   text-align: center;
+   color: rgb(36, 42, 43);
+}
+
+.settingInputs > input::placeholder {
+   color: rgb(53, 62, 63);
+}
+
+.settingInputs > input:focus-visible {
+   border: none;
+   outline: none;
+}
+
+.settingButtons > input {
+   margin: .5rem;
+   padding: 0.5rem;
+   width: 100%;
+   
+   background-color: rgb(104, 95, 75);
+   box-shadow: none;
+   box-shadow: .05rem .05rem .3rem 0 rgb(78, 71, 56),
+               -.05rem -.05rem .3rem 0 rgb(126, 115, 93),
+               inset -.05rem -.05rem .05rem 0 rgb(78, 71, 56, 0.1),
+               inset .05rem .05rem .05rem 0 rgb(126, 115, 93, 0.1);
+   border: none;
+   border-radius: 1rem;
+   font-family: 'Comfortaa', cursive;
+   font-size: inherit;
+   color: rgb(53, 62, 63);
+}
+
+.settingButtons > input:hover {
+   color: rgb(36, 42, 43);
+   cursor: pointer;
+}
+
+.settingButtons > input:active{
+   box-shadow: -.05rem -.05rem .3rem 0 rgb(78, 71, 56),
+               .05rem .05rem .3rem 0 rgb(126, 115, 93),
+               inset .05rem .05rem .05rem 0 rgb(78, 71, 56, 0.1),
+               inset -.05rem -.05rem .05rem 0 rgb(126, 115, 93, 0.1);
+}
+
+
+
+/* ADAPTATION =========================================== */
+
+@media (min-width: 500px) {
+   html {
+      font-size: 1.5rem;
+   }
+   .game {
+      max-width: 60%;
+   }
+}
+
+@media (min-width: 1100px) {
+   html {
+      font-size: 2rem;
+   }
+   .game {
+      max-width: 40%;
+   }
+}
