@@ -9,7 +9,7 @@
 }
 
 html {
-   font-size: 1.2em;  /* this parameter controls paddings, margins and font-size */
+   font-size: 1.2rem;  /* this parameter controls paddings, margins and font-size */
 }
 
 body {
@@ -36,6 +36,8 @@ p {
 .game {
    margin: 0 auto;
    padding: 1rem 0 0;
+   min-width: -webkit-fit-content;
+   min-width: -moz-fit-content;
    min-width: fit-content;
    max-width: 80%;
    position: relative;
@@ -46,7 +48,10 @@ p {
 
    font-size: inherit;
    border-radius: 1rem;
-   user-select: none;
+   -webkit-user-select: none;
+      -moz-user-select: none;
+       -ms-user-select: none;
+           user-select: none;
 
 
    background-color: rgb(36, 42, 43);
@@ -207,6 +212,22 @@ menu {
    font-size: inherit;
    text-align: center;
    color: rgb(36, 42, 43);
+}
+
+.settingInputs > input::-webkit-input-placeholder {
+   color: rgb(53, 62, 63);
+}
+
+.settingInputs > input::-moz-placeholder {
+   color: rgb(53, 62, 63);
+}
+
+.settingInputs > input:-ms-input-placeholder {
+   color: rgb(53, 62, 63);
+}
+
+.settingInputs > input::-ms-input-placeholder {
+   color: rgb(53, 62, 63);
 }
 
 .settingInputs > input::placeholder {
