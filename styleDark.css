@@ -70,7 +70,7 @@ p {
    display: block;
 }
 
-.menuButton {
+.gameButton {
   border-radius: 1rem;
 
 
@@ -82,12 +82,12 @@ p {
                inset .05rem .05rem .05rem 0 rgb(63, 72, 73, 0.1);
 }
 
-.menuButton:hover {
+.gameButton:hover {
    color:rgb(129, 112, 65);
    cursor: pointer;
 }
 
-.menuButton:active {
+.gameButton:active {
    box-shadow: -.05rem -.05rem .3rem 0 rgb(22, 26, 26),
                .05rem .05rem .3rem 0 rgb(63, 72, 73),
                inset .05rem .05rem .05rem 0 rgba(22, 26, 26, 0.1),

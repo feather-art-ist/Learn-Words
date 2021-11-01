@@ -7,23 +7,28 @@
     <title>Learn Words</title>
 </head>
 <body>
-    <audio id="sound" src="sound/click.mp3"></audio>
+    <audio id="buttonSound" src="sound/click.mp3" preload="auto"></audio>
+    <script>
+        function buttonSound(){
+            document.querySelector('#buttonSound').play();
+        };
+    </script>
 
     <menu>
-        <button onclick="Theme.changeTheme()" class="changeTheme changeThemeLight"><img src="img/moon.png" alt="change page's theme" class="themeIcon"></button>
+        <button onclick="Theme.changeTheme();buttonSound()" class="changeTheme changeThemeLight"><img src="img/moon.png" alt="change page's theme" class="themeIcon"></button>
     </menu>
 
     <div class="game">
         <div class="gameItem englishWord"><p>#</p></div>
 
-        <button class="gameItem menuButton"><p>#</p></button>
-        <button class="gameItem menuButton"><p>#</p></button>
-        <button class="gameItem menuButton"><p>#</p></button>
+        <button class="gameItem gameButton" onclick="buttonSound()"><p>#</p></button>
+        <button class="gameItem gameButton" onclick="buttonSound()"><p>#</p></button>
+        <button class="gameItem gameButton" onclick="buttonSound()"><p>#</p></button>
 
-        <button class="gameItem menuButton skipWord"><p>skip word</p></button>
+        <button class="gameItem gameButton skipWord" onclick="buttonSound()"><p>skip word</p></button>
     </div>
 
-    <button class="setPlaceholder" onclick="UserView.showSettings()"><p>&#x25bd settings &#x25bd</p></button>
+    <button class="setPlaceholder" onclick="UserView.showSettings();buttonSound()"><p>&#x25bd settings &#x25bd</p></button>
 
     <form class="settings" action="#">
         <div class="settingInputs">
@@ -32,8 +37,8 @@
         </div>
             
         <div class="settingButtons">
-            <input type="button" value="add this word">
-            <input type="button" value="delete this word">
+            <input type="button" value="add this word" onclick="buttonSound()">
+            <input type="button" value="delete this word" onclick="buttonSound()">
         </div>
     </form>
 
