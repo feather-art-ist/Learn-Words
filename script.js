@@ -76,9 +76,14 @@ const DictionaryMethods = {
     },
 
     deleteTranslationOfWord(word, unnecessaryTranslation){
-        dictionary[word].splice(dictionary[word].indexOf(unnecessaryTranslation), 1)
+        if( dictionary[word].length > 1 ){
+            dictionary[word].splice(dictionary[word].indexOf(unnecessaryTranslation), 1)
 
-        WordsStor.resetDictionaryInLocalStorage(dictionary)
+            WordsStor.resetDictionaryInLocalStorage(dictionary)
+        }else{
+            console.log('You cannot delete the last translation of this word')
+            // in the future, a user will see message whit this information
+        }
     },
 
     deleteWordOrTranslation(word, translation){
@@ -86,13 +91,13 @@ const DictionaryMethods = {
             if( dictionary[word].includes(translation) ){
                 this.deleteTranslationOfWord(word, translation)
             }else if( translation === '' ){
-                this.deleteWord(checkResult.indexOfWordInDictionary)
+                this.deleteWord(word)
             }else{
-                console.log('Word has not such translation')
+                console.log('Word does not have such translation')
                 // in the future, a user will see message whit this information
             }
         }else{
-            console.log('Dictionary has not this word')
+            console.log('Dictionary does not have this word')
             // in the future, a user will see message whit this information
         }
     }
@@ -101,6 +106,8 @@ const DictionaryMethods = {
 // SETTING
 
 const Settings = {
+    pathHTML: document.forms[0],
+
     inputs: {
         wordInputValue(){
             return document.forms[0].enteredEnglishWord.value
@@ -115,10 +122,36 @@ const Settings = {
             document.forms[0].enteredTranslation.value = str
         },
     },
+
     buttons: {
-        addThisButton(WrittenWord, WrittenTranslation){
+        addThis(word = Settings.inputs.wordInputValue(), translation = Settings.inputs.translationInputValue() ){
+            if( Settings.checkWordBeforeAdding(word) && Settings.checkTranslationBeforeAdding(translation) ){
+                DictionaryMethods.newWordOrNewTranslation(word, translation)
+            }
         },
-        deleteThisButton(WrittenWord, WrittenTranslation){
+        deleteThis(){
+            DictionaryMethods.deleteWordOrTranslation(
+                Settings.inputs.wordInputValue(),
+                Settings.inputs.translationInputValue()
+            )
+        }
+    },
+
+    checkWordBeforeAdding(word){
+        if( word.trim() !== '' ){
+            return true
+        }else{
+            console.log('Write something, the field for a word is empty')
+            return false
+        }
+    },
+
+    checkTranslationBeforeAdding(translation){
+        if( word.trim() !== '' ){
+            return true
+        }else{
+            console.log('Write something, the field for a translation is empty')
+            return false
         }
     }
 }
@@ -129,9 +162,11 @@ const WordsStor = {
     getDictionaryFromLocalStorage(){
         return JSON.parse(localStorage.getItem('dictionaryJSON'))
     },
+
     resetDictionaryInLocalStorage(dictionaryObject){
         localStorage.setItem( 'dictionaryJSON', JSON.stringify(dictionaryObject))
     },
+
     clear(){
         localStorage.clear() // this method there is for the future. User will be able to clear his localStore (his Dictionary)
     }
@@ -140,7 +175,19 @@ const WordsStor = {
 
 // START GAME
 
-if(localStorage.propertyIsEnumerable('dictionaryJSON')){//YES
+if(localStorage.propertyIsEnumerable('dictionaryJSON')){
     dictionary = {...WordsStor.getDictionaryFromLocalStorage()}
     dictionaryWords = Object.keys(dictionary)
 }
+
+Settings.pathHTML.addEventListener('click', (e) => {
+    switch (e.target) {
+        case Settings.pathHTML.addThis:
+            Settings.buttons.addThis()
+            break;
+    
+        case Settings.pathHTML.deleteThis:
+            Settings.buttons.deleteThis()
+            break;
+    }
+})
