@@ -125,9 +125,17 @@ const Settings = {
 
     buttons: {
         addThis(word = Settings.inputs.wordInputValue(), translation = Settings.inputs.translationInputValue() ){
-            if( Settings.checkWordBeforeAdding(word) && Settings.checkTranslationBeforeAdding(translation) ){
-                DictionaryMethods.newWordOrNewTranslation(word, translation)
-            }
+            Settings.checkWordBeforeAdding(word)
+            .then(resultOfWordCheck => {
+                if(resultOfWordCheck){
+                    Settings.checkTranslationBeforeAdding(translation)
+                    .then(resultOfTranslationCheck => {
+                        if(resultOfTranslationCheck){
+                            DictionaryMethods.newWordOrNewTranslation(word, translation)
+                        }
+                    })
+                }
+            })
         },
         deleteThis(){
             DictionaryMethods.deleteWordOrTranslation(
@@ -138,21 +146,35 @@ const Settings = {
     },
 
     checkWordBeforeAdding(word){
-        if( word.trim() !== '' ){
-            return true
-        }else{
-            console.log('Write something, the field for a word is empty')
-            return false
-        }
+        return new Promise(resolve => {
+            let resultOfWordCheck
+            if( word.trim() !== '' ){
+                let charFromWord = word.trim().split('')
+
+                resultOfWordCheck = !(charFromWord.some( char => !(isNaN(char * 1) || char === ' ') ))
+                !resultOfWordCheck && console.log('Write a word without numbers')
+            }else{
+                console.log('Write something, the field for a word is empty')
+                resultOfWordCheck = false
+            }
+            resolve(resultOfWordCheck)
+        })
     },
 
     checkTranslationBeforeAdding(translation){
-        if( word.trim() !== '' ){
-            return true
-        }else{
-            console.log('Write something, the field for a translation is empty')
-            return false
-        }
+        return new Promise(resolve => {
+            let resultOfTranslationCheck
+            if( translation.trim() !== '' ){
+                let charFromTranslation = translation.trim().split('')
+
+                resultOfTranslationCheck = !(charFromTranslation.some( char => !(isNaN(char * 1) || char === ' ') ))
+                !resultOfTranslationCheck && console.log('Write a translation without numbers')
+            }else{
+                console.log('Write something, the field for a translation is empty')
+                resultOfTranslationCheck = false
+            }
+            resolve(resultOfTranslationCheck)
+        })
     }
 }
 
