@@ -28,7 +28,16 @@ const UserView = {
     }
 }
 
-// GAME
+// STANDARD TOOLS
+
+const Tools = {
+    getRandomNum(fromNum, toNum){
+        toNum++
+        return (Math.floor(Math.random() * (toNum - fromNum))) + fromNum
+    }
+}
+
+// DICTIONARY
 
 let dictionary = {}
 //  dictionary {
@@ -41,6 +50,8 @@ let dictionaryWords = []
 //  ['word', 'nextWord', ... , 'lastWord']
 
 const DictionaryMethods = {
+
+    // Methods for settings
 
     addNewWord(newWord, newTranslation){
         dictionary[newWord] = [newTranslation]
@@ -100,6 +111,24 @@ const DictionaryMethods = {
             console.log('Dictionary does not have this word')
             // in the future, a user will see message whit this information
         }
+    },
+
+    // Methods for game
+
+    getRandomWordWithoutLast(){
+        return dictionaryWords[Tools.getRandomNum(0, dictionaryWords.length-2)]
+    },
+
+    moveWordInRoundToEnd(word){
+        dictionaryWords.splice(dictionaryWords.indexOf(word), 1)
+        dictionaryWords.push(word)
+    },
+
+    getRandomTranslationOfWord(word){
+        let randomIndex = Tools.getRandomNum(0, dictionary[word].length - 1)
+        let translation = dictionary[word][randomIndex]
+
+        return translation
     }
 }
 
@@ -178,6 +207,18 @@ const Settings = {
     }
 }
 
+Settings.pathHTML.addEventListener('click', (e) => {
+    switch (e.target) {
+        case Settings.pathHTML.addThis:
+            Settings.buttons.addThis()
+            break;
+    
+        case Settings.pathHTML.deleteThis:
+            Settings.buttons.deleteThis()
+            break;
+    }
+})
+
 // LOCAL_STORAGE
 
 const WordsStor = {
@@ -194,6 +235,62 @@ const WordsStor = {
     }
 }
 
+// GAME SECTION ON THE PAGE
+
+const GameSection = {
+    wordValue: document.querySelector('.word').firstChild.textContent,
+
+    setWordValue(value){
+        document.querySelector('.word').firstChild.innerHTML = value
+    },
+
+    optionsOfTranslationButtons: {
+        first: {
+            node: document.querySelector('#firstOptionOfTranslation'),
+            getValue(){
+                return this.node.textContent
+            },
+            setValue(value){
+                this.node.firstChild.innerHTML = value
+            },
+            putRandomTranslationWithoutLast(){
+                let wrongWord = DictionaryMethods.getRandomWordWithoutLast()
+                this.setValue(DictionaryMethods.getRandomTranslationOfWord(wrongWord))
+            }
+        },
+        second: {
+            node: document.querySelector('#secondOptionOfTranslation'),
+            getValue(){
+                return this.node.textContent
+            },
+            setValue(value){
+                this.node.firstChild.innerHTML = value
+            },
+            putRandomTranslationWithoutLast(){
+                let wrongWord = DictionaryMethods.getRandomWordWithoutLast()
+                this.setValue(DictionaryMethods.getRandomTranslationOfWord(wrongWord))
+            }
+        },
+        third: {
+            node: document.querySelector('#thirdOptionOfTranslation'),
+            getValue(){
+                return this.node.textContent
+            },
+            setValue(value){
+                this.node.firstChild.innerHTML = value
+            },
+            putRandomTranslationWithoutLast(){
+                let wrongWord = DictionaryMethods.getRandomWordWithoutLast()
+                this.setValue(DictionaryMethods.getRandomTranslationOfWord(wrongWord))
+            }
+        }
+    },
+
+    skipWordButton(){
+
+    }
+}
+
 
 // START GAME
 
@@ -202,14 +299,29 @@ if(localStorage.propertyIsEnumerable('dictionaryJSON')){
     dictionaryWords = Object.keys(dictionary)
 }
 
-Settings.pathHTML.addEventListener('click', (e) => {
-    switch (e.target) {
-        case Settings.pathHTML.addThis:
-            Settings.buttons.addThis()
-            break;
-    
-        case Settings.pathHTML.deleteThis:
-            Settings.buttons.deleteThis()
-            break;
+let indexOfRoundWord
+
+function startGameRound(){
+    let wordInGameRound = DictionaryMethods.getRandomWordWithoutLast()
+    DictionaryMethods.moveWordInRoundToEnd(wordInGameRound)
+    GameSection.setWordValue(wordInGameRound)
+
+    let randomTranslationOfWord = DictionaryMethods.getRandomTranslationOfWord(wordInGameRound)
+    let translationsOrder
+    switch (Tools.getRandomNum(0, 2)) {
+        case 0:
+            translationsOrder = ['first', 'second', 'third']
+        break;
+        case 1:
+            translationsOrder = ['third', 'first', 'second']
+        break;
+        case 2:
+            translationsOrder = ['second', 'third', 'first']
+        break;
     }
-})
+    GameSection.optionsOfTranslationButtons[translationsOrder[0]].setValue(randomTranslationOfWord)
+    GameSection.optionsOfTranslationButtons[translationsOrder[1]].putRandomTranslationWithoutLast()
+    GameSection.optionsOfTranslationButtons[translationsOrder[2]].putRandomTranslationWithoutLast()
+}
+
+startGameRound()
