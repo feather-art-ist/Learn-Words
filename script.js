@@ -135,7 +135,7 @@ const DictionaryMethods = {
 // SETTING
 
 const Settings = {
-    pathHTML: document.forms[0],
+    node: document.forms[0],
 
     inputs: {
         wordInputValue(){
@@ -207,13 +207,13 @@ const Settings = {
     }
 }
 
-Settings.pathHTML.addEventListener('click', (e) => {
+Settings.node.addEventListener('click', (e) => {
     switch (e.target) {
-        case Settings.pathHTML.addThis:
+        case Settings.node.addThis:
             Settings.buttons.addThis()
             break;
     
-        case Settings.pathHTML.deleteThis:
+        case Settings.node.deleteThis:
             Settings.buttons.deleteThis()
             break;
     }
@@ -286,11 +286,13 @@ const GameSection = {
         }
     },
 
-    skipWordButton(){
-
+    skipWordButton: {
+        node: document.querySelector('.skipWord'),
+        pressed(){
+            startGameRound()
+        }
     }
 }
-
 
 // START GAME
 
@@ -299,7 +301,7 @@ if(localStorage.propertyIsEnumerable('dictionaryJSON')){
     dictionaryWords = Object.keys(dictionary)
 }
 
-let indexOfRoundWord
+GameSection.skipWordButton.node.addEventListener('click', GameSection.skipWordButton.pressed)
 
 function startGameRound(){
     let wordInGameRound = DictionaryMethods.getRandomWordWithoutLast()
