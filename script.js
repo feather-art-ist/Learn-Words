@@ -8,12 +8,14 @@ const Theme = {
                 document.head.querySelector('link').href = 'styleDark.css'
                 document.querySelector('.themeIcon').src = 'img/sun.png'
                 this.now = 'dark'
+                localStorage.setItem('theme', 'dark')
             break;
         
             case 'dark':
                 document.head.querySelector('link').href = 'styleLight.css'
                 document.querySelector('.themeIcon').src = 'img/moon.png'
                 this.now = 'light'
+                localStorage.setItem('theme', 'light')
             break;
         }
     }
@@ -294,12 +296,18 @@ const GameSection = {
     }
 }
 
-// START GAME
+// ACTIONS BEFORE GAME
 
 if(localStorage.propertyIsEnumerable('dictionaryJSON')){
     dictionary = {...WordsStor.getDictionaryFromLocalStorage()}
     dictionaryWords = Object.keys(dictionary)
 }
+
+if(['light', 'dark'].includes(localStorage.getItem('theme'))){
+    localStorage.getItem('theme') !== Theme.now && Theme.changeTheme()
+}
+
+// START GAME
 
 GameSection.skipWordButton.node.addEventListener('click', GameSection.skipWordButton.pressed)
 
