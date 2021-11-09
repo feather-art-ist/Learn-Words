@@ -240,7 +240,11 @@ const WordsStor = {
 // GAME SECTION ON THE PAGE
 
 const GameSection = {
-    wordValue: document.querySelector('.word').firstChild.textContent,
+    node: document.querySelector('.game'),
+
+    getWordValue(){
+        return document.querySelector('.word').firstChild.textContent
+    },
 
     setWordValue(value){
         document.querySelector('.word').firstChild.innerHTML = value
@@ -248,7 +252,7 @@ const GameSection = {
 
     optionsOfTranslationButtons: {
         first: {
-            node: document.querySelector('#firstOptionOfTranslation'),
+            node: document.querySelector('.firstOptionOfTranslation'),
             getValue(){
                 return this.node.textContent
             },
@@ -261,7 +265,7 @@ const GameSection = {
             }
         },
         second: {
-            node: document.querySelector('#secondOptionOfTranslation'),
+            node: document.querySelector('.secondOptionOfTranslation'),
             getValue(){
                 return this.node.textContent
             },
@@ -274,7 +278,7 @@ const GameSection = {
             }
         },
         third: {
-            node: document.querySelector('#thirdOptionOfTranslation'),
+            node: document.querySelector('.thirdOptionOfTranslation'),
             getValue(){
                 return this.node.textContent
             },
@@ -285,6 +289,46 @@ const GameSection = {
                 let wrongWord = DictionaryMethods.getRandomWordWithoutLast()
                 this.setValue(DictionaryMethods.getRandomTranslationOfWord(wrongWord))
             }
+        },
+        BacklightForButton(orderNumber, color){
+            switch(color){
+                case 'green':
+                    color = 'rgb(101, 161, 101)'
+                break
+                case 'red':
+                    color = 'rgb(209, 106, 140)'
+                break
+            }
+
+            let buttonNode
+            let defaultColor
+
+            switch(orderNumber){
+                case 'first':
+                    buttonNode = this.first.node
+                    defaultColor = getComputedStyle(buttonNode).backgroundColor
+                    buttonNode.style.backgroundColor = color
+                    setTimeout(() => {
+                        buttonNode.style.backgroundColor = defaultColor
+                    }, 1000)
+                break
+                case 'second':
+                    buttonNode = this.second.node
+                    defaultColor = getComputedStyle(buttonNode).backgroundColor
+                    buttonNode.style.backgroundColor = color
+                    setTimeout(() => {
+                        buttonNode.style.backgroundColor = defaultColor
+                    }, 1000)
+                break
+                case 'third':
+                    buttonNode = this.third.node
+                    defaultColor = getComputedStyle(buttonNode).backgroundColor
+                    buttonNode.style.backgroundColor = color
+                    setTimeout(() => {
+                        buttonNode.style.backgroundColor = defaultColor
+                    }, 1000)
+                break
+            }
         }
     },
 
@@ -293,7 +337,9 @@ const GameSection = {
         pressed(){
             startGameRound()
         }
-    }
+    },
+
+    canPressGameButtons: true
 }
 
 // ACTIONS BEFORE GAME
@@ -309,7 +355,52 @@ if(['light', 'dark'].includes(localStorage.getItem('theme'))){
 
 // START GAME
 
-GameSection.skipWordButton.node.addEventListener('click', GameSection.skipWordButton.pressed)
+GameSection.skipWordButton.node.addEventListener('click', () => {
+    if(GameSection.canPressGameButtons){
+        GameSection.skipWordButton.pressed()
+    }
+})
+
+GameSection.node.addEventListener('click', (e) => {
+    if(GameSection.canPressGameButtons){
+        let translationsOfRoundWord = dictionary[GameSection.getWordValue()]
+
+        switch(e.target){
+            case GameSection.optionsOfTranslationButtons.first.node.firstChild:
+            case GameSection.optionsOfTranslationButtons.first.node:
+                if(translationsOfRoundWord.includes(GameSection.optionsOfTranslationButtons.first.getValue())){
+                    GameSection.optionsOfTranslationButtons.BacklightForButton('first', 'green')
+                    GameSection.canPressGameButtons = false
+                    setTimeout(startGameRound, 1000)
+                }else{
+                    GameSection.optionsOfTranslationButtons.BacklightForButton('first', 'red')
+                }
+            break
+            case GameSection.optionsOfTranslationButtons.second.node.firstChild:
+            case GameSection.optionsOfTranslationButtons.second.node:
+                if(translationsOfRoundWord.includes(GameSection.optionsOfTranslationButtons.second.getValue())){
+                    GameSection.optionsOfTranslationButtons.BacklightForButton('second', 'green')
+                    GameSection.canPressGameButtons = false
+                    setTimeout(startGameRound, 1000)
+                }else{
+                    GameSection.optionsOfTranslationButtons.BacklightForButton('second', 'red')
+                }
+            break
+            case GameSection.optionsOfTranslationButtons.third.node.firstChild:
+            case GameSection.optionsOfTranslationButtons.third.node:
+                if(translationsOfRoundWord.includes(GameSection.optionsOfTranslationButtons.third.getValue())){
+                    GameSection.optionsOfTranslationButtons.BacklightForButton('third', 'green')
+                    GameSection.canPressGameButtons = false
+                    setTimeout(startGameRound, 1000)
+                }else{
+                    GameSection.optionsOfTranslationButtons.BacklightForButton('third', 'red')
+                }
+            break
+        }   
+    }
+ 
+})
+
 
 function startGameRound(){
     let wordInGameRound = DictionaryMethods.getRandomWordWithoutLast()
@@ -332,6 +423,8 @@ function startGameRound(){
     GameSection.optionsOfTranslationButtons[translationsOrder[0]].setValue(randomTranslationOfWord)
     GameSection.optionsOfTranslationButtons[translationsOrder[1]].putRandomTranslationWithoutLast()
     GameSection.optionsOfTranslationButtons[translationsOrder[2]].putRandomTranslationWithoutLast()
+
+    GameSection.canPressGameButtons = true
 }
 
 startGameRound()
