@@ -60,6 +60,9 @@ const DictionaryMethods = {
 
         WordsStor.resetDictionaryInLocalStorage(dictionary)
         dictionaryWords = Object.keys(dictionary)
+
+        Settings.inputs.resetWordInputValue()           //=====================================temp !!!
+        Settings.inputs.resetTranslationInputValue()    //=====================================temp !!!
     },
 
     addNewTranslationForOldWord(OldWord, newTranslation){
@@ -290,7 +293,10 @@ const GameSection = {
                 this.setValue(DictionaryMethods.getRandomTranslationOfWord(wrongWord))
             }
         },
-        BacklightForButton(orderNumber, color){
+
+        backlightTime: 800,
+
+        backlightForButton(orderNumber, color){
             switch(color){
                 case 'green':
                     color = 'rgb(101, 161, 101)'
@@ -310,7 +316,7 @@ const GameSection = {
                     buttonNode.style.backgroundColor = color
                     setTimeout(() => {
                         buttonNode.style.backgroundColor = defaultColor
-                    }, 1000)
+                    }, this.backlightTime)
                 break
                 case 'second':
                     buttonNode = this.second.node
@@ -318,7 +324,7 @@ const GameSection = {
                     buttonNode.style.backgroundColor = color
                     setTimeout(() => {
                         buttonNode.style.backgroundColor = defaultColor
-                    }, 1000)
+                    }, this.backlightTime)
                 break
                 case 'third':
                     buttonNode = this.third.node
@@ -326,7 +332,7 @@ const GameSection = {
                     buttonNode.style.backgroundColor = color
                     setTimeout(() => {
                         buttonNode.style.backgroundColor = defaultColor
-                    }, 1000)
+                    }, this.backlightTime)
                 break
             }
         }
@@ -369,31 +375,37 @@ GameSection.node.addEventListener('click', (e) => {
             case GameSection.optionsOfTranslationButtons.first.node.firstChild:
             case GameSection.optionsOfTranslationButtons.first.node:
                 if(translationsOfRoundWord.includes(GameSection.optionsOfTranslationButtons.first.getValue())){
-                    GameSection.optionsOfTranslationButtons.BacklightForButton('first', 'green')
+                    GameSection.optionsOfTranslationButtons.backlightForButton('first', 'green')
                     GameSection.canPressGameButtons = false
-                    setTimeout(startGameRound, 1000)
+                    setTimeout(startGameRound, GameSection.optionsOfTranslationButtons.backlightTime)
                 }else{
-                    GameSection.optionsOfTranslationButtons.BacklightForButton('first', 'red')
+                    GameSection.optionsOfTranslationButtons.backlightForButton('first', 'red')
+                    GameSection.canPressGameButtons = false
+                    setTimeout(() => GameSection.canPressGameButtons = true, GameSection.optionsOfTranslationButtons.backlightTime)
                 }
             break
             case GameSection.optionsOfTranslationButtons.second.node.firstChild:
             case GameSection.optionsOfTranslationButtons.second.node:
                 if(translationsOfRoundWord.includes(GameSection.optionsOfTranslationButtons.second.getValue())){
-                    GameSection.optionsOfTranslationButtons.BacklightForButton('second', 'green')
+                    GameSection.optionsOfTranslationButtons.backlightForButton('second', 'green')
                     GameSection.canPressGameButtons = false
-                    setTimeout(startGameRound, 1000)
+                    setTimeout(startGameRound, GameSection.optionsOfTranslationButtons.backlightTime)
                 }else{
-                    GameSection.optionsOfTranslationButtons.BacklightForButton('second', 'red')
+                    GameSection.optionsOfTranslationButtons.backlightForButton('second', 'red')
+                    GameSection.canPressGameButtons = false
+                    setTimeout(() => GameSection.canPressGameButtons = true, GameSection.optionsOfTranslationButtons.backlightTime)
                 }
             break
             case GameSection.optionsOfTranslationButtons.third.node.firstChild:
             case GameSection.optionsOfTranslationButtons.third.node:
                 if(translationsOfRoundWord.includes(GameSection.optionsOfTranslationButtons.third.getValue())){
-                    GameSection.optionsOfTranslationButtons.BacklightForButton('third', 'green')
+                    GameSection.optionsOfTranslationButtons.backlightForButton('third', 'green')
                     GameSection.canPressGameButtons = false
-                    setTimeout(startGameRound, 1000)
+                    setTimeout(startGameRound, GameSection.optionsOfTranslationButtons.backlightTime)
                 }else{
-                    GameSection.optionsOfTranslationButtons.BacklightForButton('third', 'red')
+                    GameSection.optionsOfTranslationButtons.backlightForButton('third', 'red')
+                    GameSection.canPressGameButtons = false
+                    setTimeout(() => GameSection.canPressGameButtons = true, GameSection.optionsOfTranslationButtons.backlightTime)
                 }
             break
         }   
